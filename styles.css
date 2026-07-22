@@ -1,0 +1,256 @@
+/* THE LEY BEAUTY — vitrine wow + booking. Noir salon, néon bleu The Ley,
+   miroir à métamorphose de couleurs. Mr Dafoe (script néon) + Sora. */
+:root {
+  --noir: #06080b;
+  --noir2: #0b0e13;
+  --bleu: #5cc8f5;
+  --bleu-fonce: #2b9fd8;
+  --blanc: #f2f7fa;
+  --gris: #8b95a1;
+  --glow: #8a2f3d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--noir);
+  color: var(--blanc);
+  font-family: 'Sora', system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2 { font-weight: 300; letter-spacing: -.01em; line-height: 1.08; }
+h2 { font-size: clamp(2rem, 4.8vw, 52px); }
+h2 em { font-family: 'Mr Dafoe', 'Segoe Script', cursive; font-style: normal; color: var(--bleu); font-size: 1.18em; }
+.kicker {
+  font-size: 11.5px; font-weight: 600; letter-spacing: .26em; text-transform: uppercase;
+  color: var(--gris);
+}
+
+/* Wordmark */
+.wordmark { display: inline-flex; align-items: baseline; gap: 10px; text-decoration: none; }
+.wm-script { font-family: 'Mr Dafoe', 'Segoe Script', cursive; font-size: 26px; color: var(--bleu); }
+.wm-caps { font-weight: 300; font-size: 13px; letter-spacing: .42em; text-transform: uppercase; color: var(--blanc); }
+
+/* Pills */
+.pill {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-weight: 600; font-size: 14.5px; text-decoration: none;
+  padding: 13px 24px; border-radius: 999px; border: none; cursor: pointer;
+  transition: transform .15s, filter .2s, background .2s;
+}
+.pill:hover { transform: translateY(-2px); filter: brightness(1.08); }
+.pill:active { transform: scale(.96); }
+.pill-bleu { background: var(--bleu); color: #04222f; box-shadow: 0 10px 34px rgba(92,200,245,.35); }
+.pill-ghost { border: 1px solid rgba(242,247,250,.35); color: var(--blanc); background: rgba(242,247,250,.05); }
+.pill-big { font-size: 16px; padding: 16px 30px; }
+
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 60;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 5vw;
+  background: linear-gradient(180deg, rgba(6,8,11,.9), rgba(6,8,11,0));
+}
+
+/* ── HERO ────────────────────────────────────────────────────────── */
+.hero {
+  position: relative; min-height: 100svh;
+  display: grid; place-items: center; overflow: hidden;
+  text-align: center;
+}
+.hero-bg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; opacity: .5; filter: blur(6px) saturate(1.2);
+  transform: scale(1.12);
+}
+.hero-veil {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 40%, rgba(92,200,245,.10), transparent 55%),
+              linear-gradient(180deg, rgba(6,8,11,.82), rgba(6,8,11,.55) 45%, rgba(6,8,11,.94));
+}
+.hero-inner { position: relative; z-index: 2; padding: 0 20px; display: flex; flex-direction: column; align-items: center; gap: 20px; max-width: 860px; }
+.neon { display: flex; flex-direction: column; align-items: center; line-height: .9; }
+.neon-script {
+  font-family: 'Mr Dafoe', 'Segoe Script', cursive; font-weight: 400;
+  font-size: clamp(4.2rem, 13vw, 132px);
+  color: #cdeeff;
+  text-shadow: 0 0 7px rgba(160,224,255,.9), 0 0 22px var(--bleu), 0 0 64px rgba(43,159,216,.6);
+  animation: ignite 1.7s steps(1, end) 1;
+}
+.neon-caps {
+  font-family: 'Sora', sans-serif; font-weight: 300;
+  font-size: clamp(1.15rem, 3.4vw, 30px); letter-spacing: .58em; text-indent: .58em;
+  color: var(--blanc);
+  text-shadow: 0 0 8px rgba(242,247,250,.75), 0 0 30px rgba(242,247,250,.35);
+  animation: ignite 2.1s steps(1, end) 1;
+}
+@keyframes ignite {
+  0% { opacity: 0; } 8% { opacity: 1; } 12% { opacity: .25; } 17% { opacity: 1; }
+  23% { opacity: .4; } 29% { opacity: 1; } 34% { opacity: .2; } 41% { opacity: 1; } 100% { opacity: 1; }
+}
+.hero-sub { color: rgba(242,247,250,.78); max-width: 30rem; }
+.hero-ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+.scroll-hint {
+  position: absolute; bottom: 3svh; left: 50%; translate: -50% 0; z-index: 2;
+  font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: var(--gris);
+}
+
+/* ── LE MIROIR (objet-héros) ─────────────────────────────────────── */
+.mirror {
+  position: relative; height: 100svh; overflow: hidden;
+  display: grid; place-items: center;
+  background: radial-gradient(ellipse at 50% 80%, rgba(92,200,245,.06), transparent 55%), var(--noir);
+}
+.bigword {
+  position: absolute; z-index: 1; inset: 0; display: grid; place-items: center;
+  font-weight: 600; font-size: clamp(4rem, 16vw, 190px); letter-spacing: .04em;
+  color: transparent; -webkit-text-stroke: 1px rgba(242,247,250,.13);
+  user-select: none; white-space: nowrap;
+}
+.mirror-frame {
+  position: relative; z-index: 2;
+  width: min(400px, 82vw); height: min(66svh, 620px);
+  border-radius: 999px 999px 26px 26px;
+  overflow: hidden;
+  border: 1px solid rgba(242,247,250,.18);
+  box-shadow: 0 0 80px color-mix(in srgb, var(--glow) 55%, transparent),
+              0 40px 90px rgba(0,0,0,.6),
+              inset 0 0 0 6px rgba(6,8,11,.35);
+  transition: box-shadow .4s;
+}
+.mirror-frame .layer {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  opacity: 0; will-change: opacity, transform;
+}
+.mirror-frame .l-0 { opacity: 1; }
+.mirror-head { position: absolute; z-index: 3; top: 12svh; left: 6vw; max-width: 340px; }
+.mirror-head h2 { margin-top: 10px; }
+.mirror-hud {
+  position: absolute; z-index: 3; bottom: 7svh; left: 50%; translate: -50% 0;
+  display: flex; align-items: center; gap: 16px;
+  background: rgba(6,8,11,.55); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(242,247,250,.16); border-radius: 999px;
+  padding: 10px 22px; white-space: nowrap;
+}
+.hud-num { font-size: 12px; font-weight: 600; letter-spacing: .18em; color: var(--gris); }
+.hud-name { font-family: 'Mr Dafoe', 'Segoe Script', cursive; font-size: 24px; color: var(--bleu); }
+
+/* ── AVANT / APRÈS ───────────────────────────────────────────────── */
+.transfo { padding: 120px 5vw; max-width: 1100px; margin: 0 auto; }
+.transfo-head { margin-bottom: 44px; }
+.transfo-head h2 { margin-top: 10px; }
+.ba {
+  position: relative; border-radius: 26px; overflow: hidden;
+  aspect-ratio: 4 / 5; max-height: 78svh; margin: 0 auto; max-width: 620px;
+  border: 1px solid rgba(242,247,250,.14);
+}
+.ba img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ba-afterwrap {
+  position: absolute; inset: 0;
+  clip-path: inset(0 calc(100% - var(--wipe, 12%)) 0 0);
+  will-change: clip-path;
+}
+.ba-afterwrap img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ba-handle {
+  position: absolute; top: 0; bottom: 0; left: var(--wipe, 12%);
+  width: 2px; background: var(--bleu);
+  box-shadow: 0 0 18px rgba(92,200,245,.9);
+}
+.ba-tag {
+  position: absolute; top: 18px; z-index: 2;
+  font-size: 11px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
+  background: rgba(6,8,11,.6); backdrop-filter: blur(6px);
+  border: 1px solid rgba(242,247,250,.18); border-radius: 999px; padding: 7px 14px;
+}
+.ba-tag-g { left: 18px; }
+.ba-tag-d { right: 18px; color: var(--bleu); }
+
+/* ── PORTAIL INSTAGRAM ───────────────────────────────────────────── */
+.insta { position: relative; padding: 110px 0; overflow: hidden; background: var(--noir2); }
+.marquee { overflow: hidden; opacity: .85; }
+.track { display: flex; gap: 16px; width: max-content; padding: 8px 0; animation: drift 36s linear infinite; }
+.m-2 .track { animation-direction: reverse; }
+.track img {
+  width: 150px; height: 190px; object-fit: cover; border-radius: 14px;
+  border: 1px solid rgba(242,247,250,.1);
+}
+@keyframes drift { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.insta-core { position: relative; z-index: 2; text-align: center; padding: 54px 20px; display: flex; flex-direction: column; align-items: center; gap: 18px; }
+
+/* ── RÉSERVATION ─────────────────────────────────────────────────── */
+.booking { padding: 130px 5vw 120px; max-width: 1100px; margin: 0 auto; }
+.booking-head { text-align: center; margin-bottom: 46px; }
+.booking-head h2 { margin: 10px 0 26px; }
+.steps {
+  list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 26px;
+  color: var(--gris); font-size: 14px;
+}
+.steps li { display: flex; align-items: center; gap: 10px; }
+.steps span {
+  display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%;
+  background: rgba(92,200,245,.14); color: var(--bleu); font-size: 12.5px; font-weight: 600;
+}
+.cities { display: grid; gap: 20px; grid-template-columns: 1fr; }
+@media (min-width: 760px) { .cities { grid-template-columns: 1fr 1fr; } }
+.city {
+  position: relative; overflow: hidden; cursor: pointer;
+  border: 1px solid rgba(242,247,250,.14); border-radius: 24px;
+  min-height: 300px; padding: 26px;
+  display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start; gap: 4px;
+  background: var(--noir2); color: var(--blanc); font-family: inherit; text-align: left;
+  transition: transform .25s cubic-bezier(.16,1,.3,1), border-color .25s, box-shadow .25s;
+}
+.city img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  opacity: .5; transition: transform .6s cubic-bezier(.16,1,.3,1), opacity .3s;
+}
+.city::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 30%, rgba(6,8,11,.92)); }
+.city:hover { transform: translateY(-4px); border-color: rgba(92,200,245,.6); box-shadow: 0 24px 60px rgba(0,0,0,.5); }
+.city:hover img { transform: scale(1.06); opacity: .65; }
+.city.actif { border-color: var(--bleu); box-shadow: 0 0 0 1px var(--bleu), 0 24px 60px rgba(0,0,0,.5); }
+.city > span { position: relative; z-index: 2; }
+.city-name { font-size: clamp(1.8rem, 3.6vw, 40px); font-weight: 300; }
+.city-sub { color: var(--gris); font-size: 13px; }
+.city-go {
+  margin-top: 14px; display: inline-flex; align-items: center; gap: 8px;
+  background: var(--bleu); color: #04222f; font-weight: 600; font-size: 14px;
+  padding: 11px 20px; border-radius: 999px;
+}
+
+.sched { margin-top: 26px; border: 1px solid rgba(242,247,250,.14); border-radius: 24px; overflow: hidden; background: #0d1117; scroll-margin-top: 92px; }
+.sched[hidden] { display: none; }
+.sched-bar {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px 22px;
+  padding: 16px 22px; border-bottom: 1px solid rgba(242,247,250,.1);
+}
+.sched-city { font-weight: 600; font-size: 15px; }
+.sched-city::before { content: "● "; color: var(--bleu); }
+.sched-safe { display: inline-flex; align-items: center; gap: 7px; color: var(--gris); font-size: 13px; }
+.sched-open { margin-left: auto; color: var(--bleu); font-size: 13.5px; text-decoration: none; }
+.sched-open:hover { text-decoration: underline; }
+.sched-frame { height: min(78svh, 760px); background: #fff; }
+.sched-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+/* ── FOOTER ──────────────────────────────────────────────────────── */
+.foot {
+  border-top: 1px solid rgba(242,247,250,.1);
+  padding: 54px 5vw 30px; text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+}
+.foot-cities { color: var(--gris); font-size: 13.5px; letter-spacing: .18em; text-transform: uppercase; }
+.foot-ig { color: var(--blanc); font-size: 14.5px; text-decoration: none; }
+.foot-ig:hover { color: var(--bleu); }
+.foot-credit { color: rgba(139,149,161,.75); font-size: 12.5px; margin-top: 16px; }
+.foot-credit a { color: var(--gris); }
+
+/* Reveals */
+[data-reveal] { opacity: 0; transform: translateY(22px); transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1); }
+[data-reveal].in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] { opacity: 1; transform: none; transition: none; }
+  .neon-script, .neon-caps { animation: none; }
+  .track { animation: none; }
+  .ba-afterwrap { clip-path: inset(0 50% 0 0); }
+  .ba-handle { left: 50%; }
+}

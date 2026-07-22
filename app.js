@@ -73,6 +73,16 @@
     onUpdate: () => ba.style.setProperty('--wipe', wipe.v + '%')
   });
 
+  /* LE FIL : chaque mèche se dessine au scroll et relie à la section suivante */
+  document.querySelectorAll('.fil path').forEach((p) => {
+    const L = p.getTotalLength();
+    gsap.set(p, { strokeDasharray: L, strokeDashoffset: L });
+    gsap.to(p, {
+      strokeDashoffset: 0, ease: 'none',
+      scrollTrigger: { trigger: p.closest('.fil'), start: 'top 92%', end: 'bottom 30%', scrub: 0.8 }
+    });
+  });
+
   /* Parallaxe légère du fond de hero */
   gsap.to('.hero-bg', {
     yPercent: 12, ease: 'none',

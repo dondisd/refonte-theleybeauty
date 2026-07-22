@@ -3,35 +3,11 @@
 (() => {
   'use strict';
 
-  const BOOKING = {
-    mtl: { name: 'Montréal', url: 'https://theleybeauty.as.me/schedule/d86be16e' },
-    hou: { name: 'Houston', url: 'https://app.acuityscheduling.com/schedule/9fda2211' }
-  };
-
   /* Reveals */
   const io = new IntersectionObserver((es) => {
     es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold: 0.16 });
   document.querySelectorAll('[data-reveal]').forEach((el) => io.observe(el));
-
-  /* ── RÉSERVATION (fonctionne avec ou sans GSAP) ─────────────────── */
-  const sched = document.querySelector('.sched');
-  const frame = sched.querySelector('iframe');
-  const schedCity = sched.querySelector('.sched-city');
-  const schedOpen = sched.querySelector('.sched-open');
-  document.querySelectorAll('.city').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const c = BOOKING[btn.dataset.city];
-      document.querySelectorAll('.city').forEach((b) => b.classList.toggle('actif', b === btn));
-      schedCity.textContent = c.name;
-      schedOpen.href = c.url;
-      if (frame.src !== c.url) frame.src = c.url;
-      const wasHidden = sched.hidden;
-      sched.hidden = false;
-      if (window.gsap && wasHidden) gsap.from(sched, { opacity: 0, y: 30, duration: 0.6, ease: 'power3.out' });
-      sched.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-  });
 
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const fx = !reduced && window.gsap && window.ScrollFX;
@@ -73,6 +49,20 @@
     mirrorTl.to(el, { opacity: 1, duration: 0.55, ease: 'none' }, i - 0.55);
   });
   mirrorTl.fromTo('.mirror-frame', { scale: 0.97 }, { scale: 1.02, ease: 'none', duration: STATES.length - 0.5 }, 0);
+
+  /* 3D réel : le miroir s'incline en perspective sous le pointeur */
+  if (matchMedia('(pointer: fine)').matches) {
+    const mirrorSec = document.querySelector('.mirror');
+    const rx = gsap.quickTo(frameEl, 'rotationX', { duration: 0.5, ease: 'power2.out' });
+    const ry = gsap.quickTo(frameEl, 'rotationY', { duration: 0.5, ease: 'power2.out' });
+    gsap.set(frameEl, { transformPerspective: 900 });
+    mirrorSec.addEventListener('pointermove', (e) => {
+      const x = e.clientX / innerWidth - 0.5;
+      const y = e.clientY / innerHeight - 0.5;
+      ry(x * 10); rx(-y * 7);
+    });
+    mirrorSec.addEventListener('pointerleave', () => { ry(0); rx(0); });
+  }
 
   /* ── AVANT / APRÈS : le rideau suit le scroll ───────────────────── */
   const ba = document.querySelector('.ba');

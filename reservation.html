@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book your appointment | The Ley Beauty</title>
+  <meta name="description" content="Book your transformation with The Ley Beauty in Montréal or Houston. Pick your style, your time, and secure your seat.">
+  <meta name="robots" content="noindex">
+  <link rel="preload" href="fonts/MrDafoe-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/Sora-300.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="fonts/fonts.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="resa.css">
+</head>
+<body class="resa-body">
+
+  <nav class="nav">
+    <a class="wordmark" href="index.html"><span class="wm-script">The Ley</span><span class="wm-caps">Beauty</span></a>
+    <a class="resa-back" href="index.html">← Back to the site</a>
+  </nav>
+
+  <main class="resa">
+    <header class="resa-head">
+      <p class="kicker">Booking · secure deposit</p>
+      <h1 class="resa-title">Reserve your <em>transformation</em>.</h1>
+      <ol class="resa-progress" aria-label="Booking steps">
+        <li class="on" data-step-dot="1"><i></i>City</li>
+        <li data-step-dot="2"><i></i>Style</li>
+        <li data-step-dot="3"><i></i>Time</li>
+        <li data-step-dot="4"><i></i>Details</li>
+        <li data-step-dot="5"><i></i>Deposit</li>
+      </ol>
+    </header>
+
+    <div class="resa-grid">
+      <section class="resa-flow" aria-live="polite">
+
+        <!-- Étape 1 : ville -->
+        <div class="step on" data-step="1">
+          <h2 class="step-title">Where will we meet?</h2>
+          <div class="choice-grid ville-grid">
+            <button class="choice ville" data-ville="mtl">
+              <img src="assets/c-blue2.webp" alt="" aria-hidden="true">
+              <span class="choice-name">Montréal</span>
+              <span class="choice-sub">Canada · CAD</span>
+            </button>
+            <button class="choice ville" data-ville="hou">
+              <img src="assets/c-blonde2.webp" alt="" aria-hidden="true">
+              <span class="choice-name">Houston</span>
+              <span class="choice-sub">United States · USD</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Étape 2 : prestation -->
+        <div class="step" data-step="2">
+          <h2 class="step-title">Pick your style.</h2>
+          <div class="choice-grid presta-grid">
+            <button class="choice presta" data-presta="install" data-prix="250">
+              <img src="assets/c-burgundy2.webp" alt="" aria-hidden="true">
+              <span class="choice-name">Install & style</span>
+              <span class="choice-sub">Lace install, melted & styled · 2 h 30</span>
+              <span class="choice-prix">from <b>$250</b></span>
+            </button>
+            <button class="choice presta" data-presta="colour" data-prix="320">
+              <img src="assets/c-blue.webp" alt="" aria-hidden="true">
+              <span class="choice-name">Colour transformation</span>
+              <span class="choice-sub">Custom colour + install · 3 h 30</span>
+              <span class="choice-prix">from <b>$320</b></span>
+            </button>
+            <button class="choice presta" data-presta="ponytail" data-prix="95">
+              <img src="assets/c-burgundy.webp" alt="" aria-hidden="true">
+              <span class="choice-name">Sleek ponytail</span>
+              <span class="choice-sub">Snatched & laid · 1 h 15</span>
+              <span class="choice-prix">from <b>$95</b></span>
+            </button>
+            <button class="choice presta" data-presta="silk" data-prix="120">
+              <img src="assets/c-black.webp" alt="" aria-hidden="true">
+              <span class="choice-name">Silk press</span>
+              <span class="choice-sub">Silky, bouncy, healthy · 1 h 45</span>
+              <span class="choice-prix">from <b>$120</b></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Étape 3 : date & heure -->
+        <div class="step" data-step="3">
+          <h2 class="step-title">Pick your moment.</h2>
+          <div class="cal">
+            <div class="cal-jours" role="listbox" aria-label="Available dates"></div>
+            <div class="cal-heures" role="listbox" aria-label="Available times"></div>
+          </div>
+        </div>
+
+        <!-- Étape 4 : coordonnées -->
+        <div class="step" data-step="4">
+          <h2 class="step-title">Tell us who's coming.</h2>
+          <form class="resa-form" autocomplete="on">
+            <label>Full name<input type="text" name="nom" placeholder="Amara Johnson" required></label>
+            <div class="deux-col">
+              <label>Email<input type="email" name="email" placeholder="you@email.com" required></label>
+              <label>Phone<input type="tel" name="tel" placeholder="+1 514 000 0000" required></label>
+            </div>
+            <label>Notes for your stylist (optional)<input type="text" name="notes" placeholder="Inspo, hair history, allergies..."></label>
+          </form>
+        </div>
+
+        <!-- Étape 5 : acompte -->
+        <div class="step" data-step="5">
+          <h2 class="step-title">Secure your seat.</h2>
+          <div class="pay">
+            <div class="pay-carte" aria-hidden="true">
+              <span class="pc-marque"><span class="wm-script">The Ley</span></span>
+              <span class="pc-num">•••• •••• •••• ••••</span>
+              <span class="pc-nom">YOUR NAME</span>
+            </div>
+            <form class="pay-form" autocomplete="off">
+              <label>Card number<input inputmode="numeric" name="cc" placeholder="1234 5678 9012 3456" maxlength="19"></label>
+              <div class="deux-col">
+                <label>Expiry<input inputmode="numeric" name="exp" placeholder="MM / YY" maxlength="7"></label>
+                <label>CVC<input inputmode="numeric" name="cvc" placeholder="123" maxlength="4"></label>
+              </div>
+              <p class="pay-note">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                Encrypted payment · the deposit is deducted from your final price.
+              </p>
+            </form>
+          </div>
+        </div>
+
+        <!-- Confirmation -->
+        <div class="step" data-step="6">
+          <div class="done">
+            <div class="done-check" aria-hidden="true">
+              <svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="24" fill="none"/><path fill="none" d="M14 27l8 8 16-18"/></svg>
+            </div>
+            <h2 class="step-title">You're booked, gorgeous.</h2>
+            <p class="done-recap"></p>
+            <p class="done-note">A confirmation email is on its way with everything you need. See you at the chair.</p>
+            <a class="pill pill-bleu" href="index.html">Back to The Ley Beauty</a>
+          </div>
+        </div>
+
+        <div class="step-nav">
+          <button class="pill pill-ghost" data-prev hidden>← Back</button>
+          <button class="pill pill-bleu" data-next disabled>Continue →</button>
+        </div>
+      </section>
+
+      <!-- Récapitulatif sticky -->
+      <aside class="resa-recap" aria-label="Booking summary">
+        <p class="recap-titre">Your appointment</p>
+        <dl>
+          <div><dt>City</dt><dd data-recap="ville">–</dd></div>
+          <div><dt>Style</dt><dd data-recap="presta">–</dd></div>
+          <div><dt>Date</dt><dd data-recap="date">–</dd></div>
+          <div><dt>Time</dt><dd data-recap="heure">–</dd></div>
+        </dl>
+        <div class="recap-total">
+          <div><dt>Deposit due today</dt><dd data-recap="acompte">$50</dd></div>
+          <div class="recap-reste"><dt>Estimated total</dt><dd data-recap="total">–</dd></div>
+        </div>
+        <p class="recap-note">Free reschedule up to 48 h before.</p>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <p class="foot-credit">Aperçu de démonstration : aucune donnée transmise, aucun paiement traité. Concept non affilié par <a href="https://www.dondisanteme.com" target="_blank" rel="noopener">Dondi Santeme</a>.</p>
+  </footer>
+
+  <script src="vendor/gsap.min.js" defer></script>
+  <script src="resa.js" defer></script>
+</body>
+</html>

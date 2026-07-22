@@ -1,0 +1,150 @@
+/* THE LEY BEAUTY — page réservation (parcours 5 étapes + récap sticky). */
+.resa-body { background: radial-gradient(ellipse at 50% -10%, rgba(92,200,245,.08), transparent 50%), var(--noir); }
+.resa-back { color: var(--gris); text-decoration: none; font-size: 14px; }
+.resa-back:hover { color: var(--blanc); }
+.resa { max-width: 1100px; margin: 0 auto; padding: 120px 5vw 90px; }
+.resa-head { text-align: center; margin-bottom: 40px; }
+.resa-title { font-size: clamp(2.2rem, 5.4vw, 56px); margin: 10px 0 26px; }
+.resa-title em { font-family: 'Mr Dafoe', 'Segoe Script', cursive; font-style: normal; color: var(--bleu); font-size: 1.15em; }
+
+.resa-progress {
+  list-style: none; display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 22px;
+  font-size: 12.5px; font-weight: 600; letter-spacing: .08em; color: var(--gris);
+}
+.resa-progress li { display: flex; align-items: center; gap: 8px; text-transform: uppercase; }
+.resa-progress i {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: rgba(242,247,250,.18); transition: background .3s, box-shadow .3s;
+}
+.resa-progress li.on { color: var(--blanc); }
+.resa-progress li.on i { background: var(--bleu); box-shadow: 0 0 12px rgba(92,200,245,.8); }
+
+.resa-grid { display: grid; gap: 30px; grid-template-columns: 1fr; align-items: start; }
+@media (min-width: 980px) { .resa-grid { grid-template-columns: 1fr 320px; } }
+
+.step { display: none; }
+.step.on { display: block; }
+.step-title { font-size: clamp(1.5rem, 3vw, 30px); font-weight: 300; margin-bottom: 24px; }
+.step-nav { display: flex; justify-content: space-between; gap: 14px; margin-top: 30px; }
+.step-nav[hidden] { display: none; }
+.step-nav .pill[disabled] { opacity: .35; pointer-events: none; }
+.step-nav .pill:only-child { margin-left: auto; }
+
+.choice-grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .choice-grid { grid-template-columns: 1fr 1fr; } }
+.choice {
+  position: relative; overflow: hidden; cursor: pointer; text-align: left;
+  border: 1px solid rgba(242,247,250,.14); border-radius: 20px;
+  min-height: 190px; padding: 20px;
+  display: flex; flex-direction: column; justify-content: flex-end; gap: 3px;
+  background: var(--noir2); color: var(--blanc); font-family: inherit;
+  transition: transform .25s cubic-bezier(.16,1,.3,1), border-color .25s, box-shadow .25s;
+}
+.ville-grid .choice { min-height: 240px; }
+.choice img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  opacity: .45; transition: transform .6s cubic-bezier(.16,1,.3,1), opacity .3s;
+}
+.choice::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 25%, rgba(6,8,11,.94)); }
+.choice:hover { transform: translateY(-3px); border-color: rgba(92,200,245,.55); }
+.choice:hover img { transform: scale(1.06); opacity: .58; }
+.choice.actif { border-color: var(--bleu); box-shadow: 0 0 0 1px var(--bleu), 0 18px 50px rgba(0,0,0,.5); }
+.choice.actif::before {
+  content: "✓"; position: absolute; top: 14px; right: 14px; z-index: 2;
+  width: 26px; height: 26px; display: grid; place-items: center;
+  background: var(--bleu); color: #04222f; border-radius: 50%; font-weight: 700; font-size: 14px;
+}
+.choice > span { position: relative; z-index: 2; }
+.choice-name { font-size: 20px; font-weight: 600; }
+.choice-sub { color: var(--gris); font-size: 13px; }
+.choice-prix { margin-top: 6px; font-size: 13.5px; color: rgba(242,247,250,.85); }
+.choice-prix b { color: var(--bleu); font-size: 16px; }
+
+/* Calendrier */
+.cal { display: grid; gap: 20px; }
+.cal-jours { display: grid; grid-auto-flow: column; overflow-x: auto; gap: 10px; padding-bottom: 8px; scrollbar-width: thin; }
+.cal-jour {
+  min-width: 76px; padding: 12px 8px; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  background: var(--noir2); color: var(--blanc); font-family: inherit;
+  border: 1px solid rgba(242,247,250,.14); border-radius: 16px;
+  transition: border-color .2s, background .2s, transform .15s;
+}
+.cal-jour small { font-size: 11px; color: var(--gris); text-transform: uppercase; letter-spacing: .08em; }
+.cal-jour b { font-size: 22px; font-weight: 600; }
+.cal-jour:hover { transform: translateY(-2px); border-color: rgba(92,200,245,.5); }
+.cal-jour.actif { border-color: var(--bleu); background: rgba(92,200,245,.1); box-shadow: 0 0 0 1px var(--bleu); }
+.cal-heures { display: flex; flex-wrap: wrap; gap: 10px; }
+.cal-heures:empty::before { content: "Pick a date to see available times."; color: var(--gris); font-size: 14px; }
+.cal-heure {
+  padding: 11px 20px; cursor: pointer; font-family: inherit; font-size: 14.5px; font-weight: 600;
+  background: var(--noir2); color: var(--blanc);
+  border: 1px solid rgba(242,247,250,.14); border-radius: 999px;
+  transition: border-color .2s, background .2s;
+}
+.cal-heure:hover { border-color: rgba(92,200,245,.5); }
+.cal-heure.actif { background: var(--bleu); color: #04222f; border-color: var(--bleu); }
+
+/* Formulaires */
+.resa-form, .pay-form { display: flex; flex-direction: column; gap: 18px; }
+.deux-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.resa-form label, .pay-form label { display: flex; flex-direction: column; gap: 8px; font-size: 13.5px; font-weight: 600; color: rgba(242,247,250,.85); }
+.resa-form input, .pay-form input {
+  background: var(--noir2); border: 1px solid rgba(242,247,250,.14); border-radius: 14px;
+  height: 50px; padding: 0 16px; color: var(--blanc);
+  font-family: inherit; font-size: 15px; outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+.resa-form input::placeholder, .pay-form input::placeholder { color: rgba(139,149,161,.5); }
+.resa-form input:focus, .pay-form input:focus { border-color: var(--bleu); box-shadow: 0 0 0 3px rgba(92,200,245,.18); }
+
+/* Paiement */
+.pay { display: grid; gap: 26px; }
+@media (min-width: 760px) { .pay { grid-template-columns: 1fr 1fr; align-items: start; } }
+.pay-carte {
+  position: relative; width: 100%; max-width: 420px;
+  aspect-ratio: 1.586; border-radius: 20px; padding: 22px;
+  display: flex; flex-direction: column; justify-content: flex-end; gap: 8px;
+  background:
+    radial-gradient(120% 150% at 15% 10%, rgba(92,200,245,.4), transparent 50%),
+    linear-gradient(150deg, #14202c 0%, #0a121c 60%, #071019 100%);
+  border: 1px solid rgba(242,247,250,.16);
+  box-shadow: 0 26px 60px rgba(0,0,0,.55), inset 0 1px 0 rgba(242,247,250,.18);
+}
+.pc-marque { position: absolute; top: 18px; left: 22px; }
+.pc-num { font-size: clamp(1rem, 2.6vw, 21px); letter-spacing: .12em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.pc-nom { font-size: 12px; letter-spacing: .22em; color: var(--gris); }
+.pay-note { display: flex; align-items: center; gap: 8px; color: var(--gris); font-size: 12.5px; }
+
+/* Confirmation */
+.done { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 30px 0 10px; }
+.done-check svg { width: 88px; height: 88px; }
+.done-check circle { stroke: var(--bleu); stroke-width: 2.5; stroke-dasharray: 160; stroke-dashoffset: 160; }
+.done-check path { stroke: var(--bleu); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 60; stroke-dashoffset: 60; }
+.done-check.joue circle { animation: trace .7s ease-out forwards; }
+.done-check.joue path { animation: trace .5s ease-out .5s forwards; }
+@keyframes trace { to { stroke-dashoffset: 0; } }
+.done-recap { font-size: 17px; color: var(--blanc); font-weight: 600; }
+.done-note { color: var(--gris); max-width: 26rem; font-size: 14.5px; }
+
+/* Récapitulatif sticky */
+.resa-recap {
+  position: sticky; top: 96px;
+  border: 1px solid rgba(242,247,250,.14); border-radius: 20px;
+  background: rgba(11,14,19,.75); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  padding: 22px;
+}
+.recap-titre { font-weight: 600; font-size: 15px; margin-bottom: 14px; }
+.resa-recap dl { display: flex; flex-direction: column; gap: 10px; }
+.resa-recap dl > div { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; }
+.resa-recap dt { color: var(--gris); }
+.resa-recap dd { font-weight: 600; text-align: right; }
+.recap-total { margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(242,247,250,.12); display: flex; flex-direction: column; gap: 8px; }
+.recap-total > div { display: flex; justify-content: space-between; font-size: 14.5px; }
+.recap-total dd { color: var(--bleu); font-weight: 700; }
+.recap-reste dd { color: var(--blanc); font-weight: 600; }
+.recap-note { margin-top: 14px; color: var(--gris); font-size: 12.5px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .done-check circle, .done-check path { animation: none; stroke-dashoffset: 0; }
+}

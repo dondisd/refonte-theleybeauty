@@ -7,6 +7,7 @@
   <meta name="description" content="Colour transformations, installs and silk press by The Ley Beauty. Book your appointment in Montréal or Houston.">
   <link rel="preload" href="fonts/MrDafoe-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/Sora-300.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/wave-poster.webp" as="image" fetchpriority="high">
   <link rel="stylesheet" href="fonts/fonts.css">
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -22,7 +23,7 @@
 
   <!-- HERO : l'enseigne néon s'allume -->
   <header class="hero" id="top">
-    <img class="hero-bg" src="assets/salon-neon.webp" alt="" aria-hidden="true" fetchpriority="high">
+    <video class="hero-bg" src="assets/wave-loop.mp4" poster="assets/wave-poster.webp" autoplay muted loop playsinline aria-hidden="true"></video>
     <div class="hero-veil" aria-hidden="true"></div>
     <div class="hero-inner">
       <p class="kicker" data-reveal>Hairstylist · Montréal & Houston</p>
@@ -138,13 +139,13 @@
 
     <div class="cities">
       <a class="city" href="reservation.html?city=mtl" data-reveal>
-        <img src="assets/c-blue2.webp" alt="" aria-hidden="true" loading="lazy">
+        <img src="assets/ville-mtl.webp" alt="" aria-hidden="true" loading="lazy">
         <span class="city-name">Montréal</span>
         <span class="city-sub">Canada · CAD</span>
         <span class="city-go">Book Montréal →</span>
       </a>
       <a class="city" href="reservation.html?city=hou" data-reveal>
-        <img src="assets/c-blonde2.webp" alt="" aria-hidden="true" loading="lazy">
+        <img src="assets/ville-hou.webp" alt="" aria-hidden="true" loading="lazy">
         <span class="city-name">Houston</span>
         <span class="city-sub">United States · USD</span>
         <span class="city-go">Book Houston →</span>
@@ -156,7 +157,7 @@
     <a class="wordmark" href="#top"><span class="wm-script">The Ley</span><span class="wm-caps">Beauty</span></a>
     <p class="foot-cities">Montréal · Houston</p>
     <a class="foot-ig" href="https://www.instagram.com/theleybeauty/" target="_blank" rel="noopener">Instagram : @theleybeauty</a>
-    <p class="foot-credit">Concept de site non affilié : démonstration par <a href="https://www.dondisanteme.com" target="_blank" rel="noopener">Dondi Santeme</a>.</p>
+    <p class="foot-credit">Concept de site non affilié : démonstration par <a href="https://www.dondisanteme.com" target="_blank" rel="noopener">Dondi Santeme</a>. Certains visuels d'ambiance générés par IA.</p>
   </footer>
 
   <script src="vendor/gsap.min.js" defer></script>

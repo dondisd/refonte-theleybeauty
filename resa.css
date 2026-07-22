@@ -5,7 +5,7 @@
 .resa { max-width: 1100px; margin: 0 auto; padding: 120px 5vw 90px; }
 .resa-head { text-align: center; margin-bottom: 40px; }
 .resa-title { font-size: clamp(2.2rem, 5.4vw, 56px); margin: 10px 0 26px; }
-.resa-title em { font-family: 'Mr Dafoe', 'Segoe Script', cursive; font-style: normal; color: var(--bleu); font-size: 1.15em; }
+.resa-title em { font-family: 'Segoe Script', 'Dancing Script', cursive; font-style: normal; color: var(--bleu); font-size: 1.15em; }
 
 .resa-progress {
   list-style: none; display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 22px;

@@ -5,13 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Ley Beauty | Hairstylist · Montréal & Houston</title>
   <meta name="description" content="Colour transformations, installs and silk press by The Ley Beauty. Book your appointment in Montréal or Houston.">
-  <link rel="preload" href="fonts/MrDafoe-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/DancingScript-600.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/Sora-300.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/wave-poster.webp" as="image" fetchpriority="high">
   <link rel="stylesheet" href="fonts/fonts.css">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
+  <!-- RIDEAU D'OUVERTURE : le néon s'allume, les cheveux balaient, le hero apparaît -->
+  <div class="rideau" aria-hidden="true">
+    <div class="rideau-neon">
+      <span class="neon-script">The Ley</span>
+      <span class="neon-caps">BEAUTY</span>
+    </div>
+    <video class="rideau-vague" src="assets/wave-loop.mp4" muted playsinline preload="auto"></video>
+  </div>
 
   <nav class="nav">
     <a class="wordmark" href="#top" aria-label="The Ley Beauty">
@@ -51,7 +60,7 @@
       <img class="layer l-3" src="assets/c-blonde.webp" alt="Platinum blonde" loading="lazy">
     </div>
     <div class="mirror-head">
-      <p class="kicker">The chair does this</p>
+      <p class="kicker">// 01 · The metamorphosis</p>
       <h2>One chair.<br><em>Every colour.</em></h2>
     </div>
     <div class="mirror-hud" aria-hidden="true">
@@ -64,7 +73,7 @@
   <!-- AVANT / APRÈS scrubbed -->
   <section class="transfo">
     <div class="transfo-head">
-      <p class="kicker" data-reveal>The transformation</p>
+      <p class="kicker" data-reveal>// 02 · The reveal</p>
       <h2 data-reveal>You arrive yourself.<br><em>You leave iconic.</em></h2>
     </div>
     <div class="ba" aria-label="Before and after">
@@ -113,7 +122,7 @@
       </div>
     </div>
     <div class="insta-core">
-      <p class="kicker" data-reveal>2 cities · one feed</p>
+      <p class="kicker" data-reveal>// 03 · The portfolio</p>
       <h2 data-reveal>The full portfolio lives<br>on <em>Instagram</em>.</h2>
       <a class="pill pill-bleu pill-big" href="https://www.instagram.com/theleybeauty/" target="_blank" rel="noopener" data-reveal>@theleybeauty</a>
     </div>
@@ -128,7 +137,7 @@
   <!-- RÉSERVATION : parcours deux villes, calendrier intégré -->
   <section class="booking" id="book">
     <div class="booking-head">
-      <p class="kicker" data-reveal>Secure booking · deposit online</p>
+      <p class="kicker" data-reveal>// 04 · Your seat</p>
       <h2 data-reveal>Book in <em>two taps</em>.</h2>
       <ol class="steps" data-reveal>
         <li><span>1</span>Pick your city</li>

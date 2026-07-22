@@ -21,7 +21,7 @@ body {
 }
 h1, h2 { font-weight: 300; letter-spacing: -.01em; line-height: 1.08; }
 h2 { font-size: clamp(2rem, 4.8vw, 52px); }
-h2 em { font-family: 'Mr Dafoe', 'Segoe Script', cursive; font-style: normal; color: var(--bleu); font-size: 1.18em; }
+h2 em { font-family: 'Segoe Script', 'Dancing Script', cursive; font-style: normal; color: var(--bleu); font-size: 1.18em; }
 .kicker {
   font-size: 11.5px; font-weight: 600; letter-spacing: .26em; text-transform: uppercase;
   color: var(--gris);
@@ -29,7 +29,7 @@ h2 em { font-family: 'Mr Dafoe', 'Segoe Script', cursive; font-style: normal; co
 
 /* Wordmark */
 .wordmark { display: inline-flex; align-items: baseline; gap: 10px; text-decoration: none; }
-.wm-script { font-family: 'Mr Dafoe', 'Segoe Script', cursive; font-size: 26px; color: var(--bleu); }
+.wm-script { font-family: 'Segoe Script', 'Dancing Script', cursive; font-size: 26px; color: var(--bleu); }
 .wm-caps { font-weight: 300; font-size: 13px; letter-spacing: .42em; text-transform: uppercase; color: var(--blanc); }
 
 /* Pills */
@@ -44,6 +44,22 @@ h2 em { font-family: 'Mr Dafoe', 'Segoe Script', cursive; font-style: normal; co
 .pill-bleu { background: var(--bleu); color: #04222f; box-shadow: 0 10px 34px rgba(92,200,245,.35); }
 .pill-ghost { border: 1px solid rgba(242,247,250,.35); color: var(--blanc); background: rgba(242,247,250,.05); }
 .pill-big { font-size: 16px; padding: 16px 30px; }
+
+/* ── RIDEAU D'OUVERTURE ──────────────────────────────────────────── */
+.rideau {
+  position: fixed; inset: 0; z-index: 100;
+  background: var(--noir);
+  display: grid; place-items: center;
+}
+body:not(.fx) .rideau { display: none; }
+.rideau-neon { display: flex; flex-direction: column; align-items: center; line-height: .9; }
+.rideau-neon .neon-script { font-size: clamp(3.4rem, 11vw, 110px); }
+.rideau-neon .neon-caps { font-size: clamp(1rem, 3vw, 26px); }
+.rideau-vague {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; transform: translateX(112%);
+}
+body.verrou { overflow: hidden; }
 
 .nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 60;
@@ -72,7 +88,7 @@ h2 em { font-family: 'Mr Dafoe', 'Segoe Script', cursive; font-style: normal; co
 .hero-inner { position: relative; z-index: 2; padding: 0 20px; display: flex; flex-direction: column; align-items: center; gap: 20px; max-width: 860px; }
 .neon { display: flex; flex-direction: column; align-items: center; line-height: .9; }
 .neon-script {
-  font-family: 'Mr Dafoe', 'Segoe Script', cursive; font-weight: 400;
+  font-family: 'Segoe Script', 'Dancing Script', cursive; font-weight: 400;
   font-size: clamp(4.2rem, 13vw, 132px);
   color: #cdeeff;
   text-shadow: 0 0 7px rgba(160,224,255,.9), 0 0 22px var(--bleu), 0 0 64px rgba(43,159,216,.6);
@@ -134,7 +150,7 @@ h2 em { font-family: 'Mr Dafoe', 'Segoe Script', cursive; font-style: normal; co
   padding: 10px 22px; white-space: nowrap;
 }
 .hud-num { font-size: 12px; font-weight: 600; letter-spacing: .18em; color: var(--gris); }
-.hud-name { font-family: 'Mr Dafoe', 'Segoe Script', cursive; font-size: 24px; color: var(--bleu); }
+.hud-name { font-family: 'Segoe Script', 'Dancing Script', cursive; font-size: 24px; color: var(--bleu); }
 
 /* ── AVANT / APRÈS ───────────────────────────────────────────────── */
 .transfo { padding: 120px 5vw; max-width: 1100px; margin: 0 auto; }

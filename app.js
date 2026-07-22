@@ -16,6 +16,52 @@
   document.body.classList.add('fx');
   ScrollFX.init();
 
+  /* ── RIDEAU D'OUVERTURE : néon qui s'allume -> les cheveux balaient ->
+     le hero émerge avec une entrée caméra (raccord matière vague->vague) ── */
+  const rideau = document.querySelector('.rideau');
+  if (rideau) {
+    document.body.classList.add('verrou');
+    const vague = rideau.querySelector('.rideau-vague');
+    const finRideau = () => {
+      rideau.remove();
+      document.body.classList.remove('verrou');
+    };
+    const tlRideau = gsap.timeline({ onComplete: finRideau });
+    tlRideau
+      .add(() => { vague.play().catch(() => {}); }, 1.15)
+      .to(vague, { x: 0, duration: 0.85, ease: 'power2.in' }, 1.25)
+      .to(rideau, { opacity: 0, duration: 0.7, ease: 'power1.inOut' }, 2.25)
+      .from('.hero-inner', { scale: 1.22, y: 34, duration: 1.1, ease: 'power3.out' }, 2.3)
+      .from('.nav', { y: -20, opacity: 0, duration: 0.6, ease: 'power2.out' }, 2.6);
+    /* Skippable au premier geste */
+    const skip = () => { tlRideau.progress(1); removeEventListener('pointerdown', skip); removeEventListener('keydown', skip); };
+    addEventListener('pointerdown', skip); addEventListener('keydown', skip);
+  }
+
+  /* ── PLONGÉE-CAMÉRA hero -> miroir (loi 2 du scroll-storytelling) :
+     on plonge DANS la vague, le miroir émerge pré-zoomé ── */
+  const dive = gsap.timeline({
+    scrollTrigger: { trigger: '.hero', start: 'top top', end: '+=120%', scrub: 0.8, pin: true, anticipatePin: 1 }
+  });
+  dive
+    .to('.hero-inner', { scale: 2.7, opacity: 0, ease: 'power1.in', duration: 1 }, 0)
+    .to('.hero-bg', { scale: 1.55, ease: 'none', duration: 1 }, 0)
+    .to('.hero-veil', { opacity: 0.15, ease: 'none', duration: 0.6 }, 0)
+    .to('.hero-veil', { opacity: 1, ease: 'power1.in', duration: 0.4 }, 0.6)
+    .to('.scroll-hint', { opacity: 0, duration: 0.2 }, 0);
+
+  /* Hero en couches : parallaxe pointeur (loi 4) */
+  if (matchMedia('(pointer: fine)').matches) {
+    const hx = gsap.quickTo('.hero-inner', 'x', { duration: 0.6, ease: 'power2.out' });
+    const hy = gsap.quickTo('.hero-inner', 'y', { duration: 0.6, ease: 'power2.out' });
+    const bx = gsap.quickTo('.hero-bg', 'x', { duration: 0.8, ease: 'power2.out' });
+    const by = gsap.quickTo('.hero-bg', 'y', { duration: 0.8, ease: 'power2.out' });
+    document.querySelector('.hero').addEventListener('pointermove', (e) => {
+      const x = e.clientX / innerWidth - 0.5, y = e.clientY / innerHeight - 0.5;
+      hx(x * 16); hy(y * 10); bx(x * -26); by(y * -16);
+    });
+  }
+
   /* ── LE MIROIR : 4 couleurs pilotées par le scroll ──────────────── */
   const STATES = [
     { name: 'Cherry Burgundy', glow: '#8a2f3d' },
@@ -48,7 +94,10 @@
     if (i === 0) return;
     mirrorTl.to(el, { opacity: 1, duration: 0.55, ease: 'none' }, i - 0.55);
   });
-  mirrorTl.fromTo('.mirror-frame', { scale: 0.97 }, { scale: 1.02, ease: 'none', duration: STATES.length - 0.5 }, 0);
+  /* Émergence après la plongée : le miroir arrive pré-zoomé et se pose */
+  mirrorTl.fromTo('.mirror-frame', { scale: 1.26, opacity: 0.3 }, { scale: 1, opacity: 1, ease: 'power2.out', duration: 0.45 }, 0);
+  mirrorTl.to('.mirror-frame', { scale: 1.03, ease: 'none', duration: STATES.length - 0.6 }, 0.5);
+  mirrorTl.fromTo('.mirror-head', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' }, 0.15);
 
   /* 3D réel : le miroir s'incline en perspective sous le pointeur */
   if (matchMedia('(pointer: fine)').matches) {

@@ -1,9 +1,10 @@
-/* THE LEY BEAUTY — miroir à métamorphose (objet-héros), avant/après scrubbed,
-   parcours de réservation deux villes avec calendrier Acuity intégré. */
+/* THE LEY — LE FILM. Le scroll est la télécommande : chaque séquence est un
+   canvas scrubé (frames webp), préchargée pendant que la précédente joue.
+   Rideau : le néon s'allume puis rejoint l'enseigne du salon (raccord lumière). */
 (() => {
   'use strict';
 
-  /* Reveals */
+  /* Reveals (sections non-film) */
   const io = new IntersectionObserver((es) => {
     es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold: 0.16 });
@@ -11,142 +12,118 @@
 
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const fx = !reduced && window.gsap && window.ScrollFX;
-  if (!fx) return;
+  if (!fx) { const r = document.querySelector('.rideau'); if (r) r.remove(); return; }
 
   document.body.classList.add('fx');
   ScrollFX.init();
 
-  /* ── RIDEAU D'OUVERTURE : néon qui s'allume -> les cheveux balaient ->
-     le hero émerge avec une entrée caméra (raccord matière vague->vague) ── */
+  /* ── Gestion des séquences du film ─────────────────────────────── */
+  const seqs = [...document.querySelectorAll('.seq')].map((el) => ({
+    el,
+    dir: el.dataset.frames,
+    count: +el.dataset.count,
+    pin: +el.dataset.pin,
+    canvas: el.querySelector('canvas'),
+    poster: el.querySelector('.seq-poster'),
+    imgs: null,
+    loading: null,
+    state: { f: 0 }
+  }));
+
+  function charge(seq) {
+    if (seq.loading) return seq.loading;
+    seq.imgs = [];
+    const jobs = [];
+    for (let i = 1; i <= seq.count; i++) {
+      const im = new Image();
+      im.src = `${seq.dir}/frame-${String(i).padStart(3, '0')}.webp`;
+      seq.imgs.push(im);
+      jobs.push(new Promise((res) => { im.complete ? res() : (im.onload = im.onerror = res); }));
+    }
+    seq.loading = Promise.all(jobs);
+    return seq.loading;
+  }
+
+  function dimensionne(seq) {
+    seq.canvas.width = seq.el.clientWidth * Math.min(devicePixelRatio, 2);
+    seq.canvas.height = seq.el.clientHeight * Math.min(devicePixelRatio, 2);
+  }
+
+  function rend(seq) {
+    const im = seq.imgs && seq.imgs[Math.max(0, Math.min(seq.count - 1, Math.round(seq.state.f)))];
+    if (!im || !im.naturalWidth) return;
+    const ctx = seq.canvas.getContext('2d');
+    const cw = seq.canvas.width, ch = seq.canvas.height;
+    const s = Math.max(cw / im.naturalWidth, ch / im.naturalHeight);
+    const w = im.naturalWidth * s, h = im.naturalHeight * s;
+    ctx.clearRect(0, 0, cw, ch);
+    ctx.drawImage(im, (cw - w) / 2, (ch - h) / 2, w, h);
+    if (seq.poster && !seq.poster.classList.contains('cache')) seq.poster.classList.add('cache');
+  }
+
+  seqs.forEach((seq, i) => {
+    dimensionne(seq);
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: seq.el, start: 'top top', end: `+=${seq.pin}%`,
+        scrub: 0.8, pin: true, anticipatePin: 1,
+        onEnter: () => { charge(seq).then(() => rend(seq)); if (seqs[i + 1]) charge(seqs[i + 1]); }
+      }
+    });
+    tl.to(seq.state, { f: seq.count - 1, ease: 'none', duration: 1, onUpdate: () => rend(seq) }, 0);
+    seq.tl = tl;
+  });
+  addEventListener('resize', () => seqs.forEach((s) => { dimensionne(s); rend(s); }));
+
+  /* Précharge : la 1 tout de suite, la 2 dès que la page est posée */
+  charge(seqs[0]).then(() => rend(seqs[0]));
+  addEventListener('load', () => { if (seqs[1]) charge(seqs[1]); });
+
+  /* ── Textes du film (persistance, loi de la référence) ─────────── */
+  const s1tl = seqs[0].tl;
+  s1tl.to('.s1a', { opacity: 1, duration: 0.12 }, 0.06)
+      .to('.s1a', { opacity: 0, duration: 0.1 }, 0.44)
+      .to('.s1b', { opacity: 1, duration: 0.14 }, 0.6)
+      .to('.scroll-hint', { opacity: 0, duration: 0.06 }, 0.1)
+      .to('.hud-kicker:not(.k4)', { opacity: 0, duration: 0.1 }, 0.44);
+  seqs[1].tl.to('.s2a', { opacity: 1, duration: 0.14 }, 0.08)
+            .to('.s2a', { opacity: 0, duration: 0.12 }, 0.82);
+
+  /* Séquence 4 : HUD des teintes soudé à la métamorphose */
+  const TEINTES = [
+    { p: 0, num: '01 / 04', nom: 'Jet Black' },
+    { p: 0.18, num: '02 / 04', nom: 'Cherry Burgundy' },
+    { p: 0.45, num: '03 / 04', nom: 'Midnight Blue' },
+    { p: 0.72, num: '04 / 04', nom: 'Platinum Blonde' }
+  ];
+  const s4 = seqs[3];
+  const hudNum = document.querySelector('.teinte-hud .hud-num');
+  const hudNom = document.querySelector('.teinte-hud .hud-name');
+  s4.tl.to('.teinte-hud', { opacity: 1, duration: 0.1 }, 0.04)
+       .to('.k4', { opacity: 1, duration: 0.1 }, 0.04);
+  s4.tl.eventCallback('onUpdate', () => {
+    const p = s4.tl.progress();
+    let t = TEINTES[0];
+    for (const c of TEINTES) if (p >= c.p) t = c;
+    if (hudNom.textContent !== t.nom) { hudNum.textContent = t.num; hudNom.textContent = t.nom; }
+  });
+
+  /* Séquence 6 : le texte et le CTA se posent avec le fauteuil */
+  const s6 = seqs[4];
+  s6.tl.to('.s6a', { opacity: 1, duration: 0.16 }, 0.3)
+       .to('.hud-cta', { opacity: 1, duration: 0.16 }, 0.55);
+
+  /* ── Rideau : néon qui s'allume puis rejoint l'enseigne du salon ── */
   const rideau = document.querySelector('.rideau');
   if (rideau) {
     document.body.classList.add('verrou');
-    const vague = rideau.querySelector('.rideau-vague');
-    const finRideau = () => {
-      rideau.remove();
-      document.body.classList.remove('verrou');
-    };
-    const tlRideau = gsap.timeline({ onComplete: finRideau });
-    tlRideau
-      .add(() => { vague.play().catch(() => {}); }, 1.15)
-      .to(vague, { x: 0, duration: 0.85, ease: 'power2.in' }, 1.25)
-      .to(rideau, { opacity: 0, duration: 0.7, ease: 'power1.inOut' }, 2.25)
-      .from('.hero-inner', { scale: 1.22, y: 34, duration: 1.1, ease: 'power3.out' }, 2.3)
-      .from('.nav', { y: -20, opacity: 0, duration: 0.6, ease: 'power2.out' }, 2.6);
-    /* Skippable au premier geste */
-    const skip = () => { tlRideau.progress(1); removeEventListener('pointerdown', skip); removeEventListener('keydown', skip); };
+    const neon = rideau.querySelector('.rideau-neon');
+    const fin = () => { rideau.remove(); document.body.classList.remove('verrou'); };
+    const tlR = gsap.timeline({ onComplete: fin });
+    tlR.to(rideau, { backgroundColor: 'rgba(6,8,11,0)', duration: 0.7, ease: 'power1.inOut' }, 1.5)
+       .to(neon, { scale: 0.24, xPercent: -34, yPercent: -120, opacity: 0, duration: 0.9, ease: 'power2.inOut' }, 1.55)
+       .from('.nav', { y: -20, opacity: 0, duration: 0.5, ease: 'power2.out' }, 2.1);
+    const skip = () => { tlR.progress(1); removeEventListener('pointerdown', skip); removeEventListener('keydown', skip); };
     addEventListener('pointerdown', skip); addEventListener('keydown', skip);
-  }
-
-  /* ── PLONGÉE-CAMÉRA hero -> miroir (loi 2 du scroll-storytelling) :
-     on plonge DANS la vague, le miroir émerge pré-zoomé ── */
-  const dive = gsap.timeline({
-    scrollTrigger: { trigger: '.hero', start: 'top top', end: '+=120%', scrub: 0.8, pin: true, anticipatePin: 1 }
-  });
-  dive
-    .to('.hero-inner', { scale: 2.7, opacity: 0, ease: 'power1.in', duration: 1 }, 0)
-    .to('.hero-bg', { scale: 1.55, ease: 'none', duration: 1 }, 0)
-    .to('.hero-veil', { opacity: 0.15, ease: 'none', duration: 0.6 }, 0)
-    .to('.hero-veil', { opacity: 1, ease: 'power1.in', duration: 0.4 }, 0.6)
-    .to('.scroll-hint', { opacity: 0, duration: 0.2 }, 0);
-
-  /* Hero en couches : parallaxe pointeur (loi 4) */
-  if (matchMedia('(pointer: fine)').matches) {
-    const hx = gsap.quickTo('.hero-inner', 'x', { duration: 0.6, ease: 'power2.out' });
-    const hy = gsap.quickTo('.hero-inner', 'y', { duration: 0.6, ease: 'power2.out' });
-    const bx = gsap.quickTo('.hero-bg', 'x', { duration: 0.8, ease: 'power2.out' });
-    const by = gsap.quickTo('.hero-bg', 'y', { duration: 0.8, ease: 'power2.out' });
-    document.querySelector('.hero').addEventListener('pointermove', (e) => {
-      const x = e.clientX / innerWidth - 0.5, y = e.clientY / innerHeight - 0.5;
-      hx(x * 16); hy(y * 10); bx(x * -26); by(y * -16);
-    });
-  }
-
-  /* ── LE MIROIR : 4 couleurs pilotées par le scroll ──────────────── */
-  const STATES = [
-    { name: 'Cherry Burgundy', glow: '#8a2f3d' },
-    { name: 'Midnight Blue', glow: '#2f4d8a' },
-    { name: 'Jet Black', glow: '#454b54' },
-    { name: 'Platinum Blonde', glow: '#8a6f2f' }
-  ];
-  const layers = [...document.querySelectorAll('.mirror-frame .layer')];
-  const frameEl = document.querySelector('.mirror-frame');
-  const hudNum = document.querySelector('.hud-num');
-  const hudName = document.querySelector('.hud-name');
-  const bigword = document.querySelector('.bigword');
-
-  const mirrorTl = gsap.timeline({
-    scrollTrigger: {
-      trigger: '.mirror', start: 'top top', end: '+=320%', scrub: 1, pin: true, anticipatePin: 1,
-      onUpdate: (st) => {
-        const i = Math.min(STATES.length - 1, Math.floor(st.progress * STATES.length));
-        const s = STATES[i];
-        if (hudName.textContent !== s.name) {
-          hudNum.textContent = '0' + (i + 1) + ' / 04';
-          hudName.textContent = s.name;
-          bigword.textContent = s.name.split(' ').pop().toUpperCase();
-          frameEl.style.setProperty('--glow', s.glow);
-        }
-      }
-    }
-  });
-  layers.forEach((el, i) => {
-    if (i === 0) return;
-    mirrorTl.to(el, { opacity: 1, duration: 0.55, ease: 'none' }, i - 0.55);
-  });
-  /* Émergence après la plongée : le miroir arrive pré-zoomé et se pose */
-  mirrorTl.fromTo('.mirror-frame', { scale: 1.26, opacity: 0.3 }, { scale: 1, opacity: 1, ease: 'power2.out', duration: 0.45 }, 0);
-  mirrorTl.to('.mirror-frame', { scale: 1.03, ease: 'none', duration: STATES.length - 0.6 }, 0.5);
-  mirrorTl.fromTo('.mirror-head', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' }, 0.15);
-
-  /* 3D réel : le miroir s'incline en perspective sous le pointeur */
-  if (matchMedia('(pointer: fine)').matches) {
-    const mirrorSec = document.querySelector('.mirror');
-    const rx = gsap.quickTo(frameEl, 'rotationX', { duration: 0.5, ease: 'power2.out' });
-    const ry = gsap.quickTo(frameEl, 'rotationY', { duration: 0.5, ease: 'power2.out' });
-    gsap.set(frameEl, { transformPerspective: 900 });
-    mirrorSec.addEventListener('pointermove', (e) => {
-      const x = e.clientX / innerWidth - 0.5;
-      const y = e.clientY / innerHeight - 0.5;
-      ry(x * 10); rx(-y * 7);
-    });
-    mirrorSec.addEventListener('pointerleave', () => { ry(0); rx(0); });
-  }
-
-  /* ── AVANT / APRÈS : le rideau suit le scroll ───────────────────── */
-  const ba = document.querySelector('.ba');
-  const wipe = { v: 12 };
-  gsap.to(wipe, {
-    v: 96, ease: 'none',
-    scrollTrigger: { trigger: ba, start: 'top 75%', end: 'bottom 45%', scrub: 0.6 },
-    onUpdate: () => ba.style.setProperty('--wipe', wipe.v + '%')
-  });
-
-  /* LE FIL : chaque mèche se dessine au scroll et relie à la section suivante */
-  document.querySelectorAll('.fil path').forEach((p) => {
-    const L = p.getTotalLength();
-    gsap.set(p, { strokeDasharray: L, strokeDashoffset: L });
-    gsap.to(p, {
-      strokeDashoffset: 0, ease: 'none',
-      scrollTrigger: { trigger: p.closest('.fil'), start: 'top 92%', end: 'bottom 30%', scrub: 0.8 }
-    });
-  });
-
-  /* Parallaxe légère du fond de hero */
-  gsap.to('.hero-bg', {
-    yPercent: 12, ease: 'none',
-    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
-  });
-
-  /* Ancres via Lenis */
-  if (ScrollFX.lenis) {
-    document.querySelectorAll('a[href^="#"]').forEach((a) => {
-      a.addEventListener('click', (e) => {
-        const t = document.querySelector(a.getAttribute('href'));
-        if (!t) return;
-        e.preventDefault();
-        ScrollFX.lenis.scrollTo(t, { offset: 0 });
-      });
-    });
   }
 })();

@@ -4,22 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Ley Beauty | Hairstylist · Montréal & Houston</title>
-  <meta name="description" content="Colour transformations, installs and silk press by The Ley Beauty. Book your appointment in Montréal or Houston.">
+  <meta name="description" content="Step into the salon. Colour transformations, installs and silk press by The Ley Beauty. Book your appointment in Montréal or Houston.">
   <link rel="preload" href="fonts/DancingScript-600.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/Sora-300.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/wave-poster.webp" as="image" fetchpriority="high">
+  <link rel="preload" href="film/seq1/frame-001.webp" as="image" fetchpriority="high">
   <link rel="stylesheet" href="fonts/fonts.css">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="film.css">
 </head>
 <body>
 
-  <!-- RIDEAU D'OUVERTURE : le néon s'allume, les cheveux balaient, le hero apparaît -->
+  <!-- RIDEAU : le néon s'allume puis rejoint l'enseigne du salon (Séquence 1) -->
   <div class="rideau" aria-hidden="true">
     <div class="rideau-neon">
       <span class="neon-script">The Ley</span>
       <span class="neon-caps">BEAUTY</span>
     </div>
-    <video class="rideau-vague" src="assets/wave-loop.mp4" muted playsinline preload="auto"></video>
   </div>
 
   <nav class="nav">
@@ -27,146 +27,109 @@
       <span class="wm-script">The Ley</span>
       <span class="wm-caps">Beauty</span>
     </a>
-    <a class="pill pill-bleu" href="#book">Book now</a>
+    <a class="pill pill-bleu" href="reservation.html">Book now</a>
   </nav>
 
-  <!-- HERO : l'enseigne néon s'allume -->
-  <header class="hero" id="top">
-    <video class="hero-bg" src="assets/wave-loop.mp4" poster="assets/wave-poster.webp" autoplay muted loop playsinline aria-hidden="true"></video>
-    <div class="hero-veil" aria-hidden="true"></div>
-    <div class="hero-inner">
-      <p class="kicker" data-reveal>Hairstylist · Montréal & Houston</p>
-      <h1 class="neon" aria-label="The Ley Beauty">
-        <span class="neon-script">The Ley</span>
-        <span class="neon-caps">BEAUTY</span>
-      </h1>
-      <p class="hero-sub" data-reveal>Colour transformations and installs so clean, clients say it feels illegal.</p>
-      <div class="hero-ctas" data-reveal>
-        <a class="pill pill-bleu pill-big" href="#book">Book your appointment</a>
-        <a class="pill pill-ghost" href="#mirror">See the work</a>
-      </div>
-    </div>
-    <p class="scroll-hint" aria-hidden="true">Scroll</p>
-    <svg class="fil" viewBox="0 0 100 120" preserveAspectRatio="none" aria-hidden="true"><path d="M 50 0 C 18 34, 84 62, 50 88 C 30 103, 55 112, 50 120"/></svg>
-  </header>
+  <!-- ══ LE FILM : le scroll est la télécommande (RÈGLE FILM D'ABORD) ══ -->
+  <main id="top">
 
-  <!-- LE MIROIR : la chevelure change de couleur sous le scroll (objet-héros) -->
-  <section class="mirror" id="mirror">
-    <p class="bigword" aria-hidden="true">BURGUNDY</p>
-    <div class="mirror-frame" style="--glow:#8a2f3d">
-      <img class="layer l-0" src="assets/c-burgundy2.webp" alt="Cherry burgundy ponytail by The Ley Beauty">
-      <img class="layer l-1" src="assets/c-blue.webp" alt="Midnight blue waves" loading="lazy">
-      <img class="layer l-2" src="assets/c-black.webp" alt="Jet black waves" loading="lazy">
-      <img class="layer l-3" src="assets/c-blonde.webp" alt="Platinum blonde" loading="lazy">
-    </div>
-    <div class="mirror-head">
-      <p class="kicker">// 01 · The metamorphosis</p>
-      <h2>One chair.<br><em>Every colour.</em></h2>
-    </div>
-    <div class="mirror-hud" aria-hidden="true">
-      <span class="hud-num">01 / 04</span>
-      <span class="hud-name">Cherry Burgundy</span>
-    </div>
-    <svg class="fil fil-bas" viewBox="0 0 100 120" preserveAspectRatio="none" aria-hidden="true"><path d="M 50 0 C 80 30, 22 58, 50 86 C 68 104, 42 112, 50 120"/></svg>
-  </section>
+    <!-- Séquence 1 : L'invitation -->
+    <section class="seq" id="s1" data-frames="film/seq1" data-count="64" data-pin="300">
+      <canvas aria-hidden="true"></canvas>
+      <img class="seq-poster" src="film/seq1/frame-001.webp" alt="Une femme vous attend dans le salon The Ley Beauty" fetchpriority="high">
+      <p class="hud hud-kicker">Hairstylist · Montréal & Houston</p>
+      <p class="hud hud-line s1a">She's expecting <em>you</em>.</p>
+      <p class="hud hud-line s1b"><em>Come closer.</em></p>
+      <p class="hud scroll-hint">Scroll</p>
+    </section>
 
-  <!-- AVANT / APRÈS scrubbed -->
-  <section class="transfo">
-    <div class="transfo-head">
-      <p class="kicker" data-reveal>// 02 · The reveal</p>
-      <h2 data-reveal>You arrive yourself.<br><em>You leave iconic.</em></h2>
-    </div>
-    <div class="ba" aria-label="Before and after">
-      <img class="ba-before" src="assets/before.webp" alt="Before: natural hair">
-      <div class="ba-afterwrap"><img class="ba-after" src="assets/after2.webp" alt="After: burgundy install by The Ley Beauty"></div>
-      <span class="ba-handle" aria-hidden="true"></span>
-      <span class="ba-tag ba-tag-g" aria-hidden="true">Before</span>
-      <span class="ba-tag ba-tag-d" aria-hidden="true">After</span>
-    </div>
-  </section>
+    <!-- Séquence 2 : L'approche -->
+    <section class="seq" id="s2" data-frames="film/seq2" data-count="64" data-pin="240">
+      <canvas aria-hidden="true"></canvas>
+      <img class="seq-poster" src="film/seq2/frame-001.webp" alt="" loading="lazy">
+      <p class="hud hud-line s2a">Your transformation<br><em>starts here.</em></p>
+    </section>
 
-  <!-- CE QU'ELLE Y GAGNE : la promesse, dite clairement -->
-  <section class="promesse">
-    <div class="promesse-grid">
-      <div class="prom" data-reveal>
-        <span class="prom-ic" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
-        </span>
-        <h3>Colour matched to you</h3>
-        <p>Your skin tone, your lifestyle, your maintenance level. Never a shade off a chart.</p>
-      </div>
-      <div class="prom" data-reveal>
-        <span class="prom-ic" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-        </span>
-        <h3>Installs that hold</h3>
-        <p>Melted, secured and styled to survive your busiest weeks, in Montréal winters or Houston heat.</p>
-      </div>
-      <div class="prom" data-reveal>
-        <span class="prom-ic" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-        </span>
-        <h3>Zero surprises</h3>
-        <p>Clear prices, your deposit deducted from the total, free reschedule up to 48 h before.</p>
-      </div>
-    </div>
-    <svg class="fil" viewBox="0 0 100 120" preserveAspectRatio="none" aria-hidden="true"><path d="M 50 0 C 20 32, 78 60, 50 88 C 34 104, 58 112, 50 120"/></svg>
-  </section>
+    <!-- Séquence 3 : La plongée (la matière seule, aucun texte) -->
+    <section class="seq" id="s3" data-frames="film/seq3" data-count="56" data-pin="180">
+      <canvas aria-hidden="true"></canvas>
+      <img class="seq-poster" src="film/seq3/frame-001.webp" alt="" loading="lazy">
+    </section>
 
-  <!-- PORTAIL INSTAGRAM : le portfolio vit sur IG -->
-  <section class="insta">
-    <div class="marquee m-1" aria-hidden="true">
-      <div class="track">
-        <img src="assets/c-burgundy.webp" alt=""><img src="assets/c-blue2.webp" alt=""><img src="assets/c-blonde2.webp" alt=""><img src="assets/after.webp" alt=""><img src="assets/c-black.webp" alt=""><img src="assets/c-blue.webp" alt="">
-        <img src="assets/c-burgundy.webp" alt=""><img src="assets/c-blue2.webp" alt=""><img src="assets/c-blonde2.webp" alt=""><img src="assets/after.webp" alt=""><img src="assets/c-black.webp" alt=""><img src="assets/c-blue.webp" alt="">
-      </div>
-    </div>
-    <div class="insta-core">
-      <p class="kicker" data-reveal>// 03 · The portfolio</p>
-      <h2 data-reveal>The full portfolio lives<br>on <em>Instagram</em>.</h2>
-      <a class="pill pill-bleu pill-big" href="https://www.instagram.com/theleybeauty/" target="_blank" rel="noopener" data-reveal>@theleybeauty</a>
-    </div>
-    <div class="marquee m-2" aria-hidden="true">
-      <div class="track">
-        <img src="assets/c-blonde.webp" alt=""><img src="assets/after2.webp" alt=""><img src="assets/c-burgundy2.webp" alt=""><img src="assets/salon-neon.webp" alt=""><img src="assets/c-blue.webp" alt=""><img src="assets/before.webp" alt="">
-        <img src="assets/c-blonde.webp" alt=""><img src="assets/after2.webp" alt=""><img src="assets/c-burgundy2.webp" alt=""><img src="assets/salon-neon.webp" alt=""><img src="assets/c-blue.webp" alt=""><img src="assets/before.webp" alt="">
-      </div>
-    </div>
-  </section>
+    <!-- Séquence 4 : La métamorphose -->
+    <section class="seq" id="s4" data-frames="film/seq4" data-count="64" data-pin="340">
+      <canvas aria-hidden="true"></canvas>
+      <img class="seq-poster" src="film/seq4/frame-001.webp" alt="" loading="lazy">
+      <p class="hud hud-kicker k4">// 01 · The metamorphosis</p>
+      <div class="hud teinte-hud"><span class="hud-num">01 / 04</span><span class="hud-name">Jet Black</span></div>
+    </section>
 
-  <!-- RÉSERVATION : parcours deux villes, calendrier intégré -->
-  <section class="booking" id="book">
-    <div class="booking-head">
-      <p class="kicker" data-reveal>// 04 · Your seat</p>
-      <h2 data-reveal>Book in <em>two taps</em>.</h2>
-      <ol class="steps" data-reveal>
-        <li><span>1</span>Pick your city</li>
-        <li><span>2</span>Pick your style & time</li>
-        <li><span>3</span>Secure it with your deposit</li>
-      </ol>
-    </div>
+    <!-- Séquence 5 : LE RÉEL (vraies clientes, vraies vidéos) -->
+    <section class="reel">
+      <div class="reel-head">
+        <p class="kicker" data-reveal>// 02 · The real ones</p>
+        <h2 data-reveal>Real chairs. Real clients.<br><em>Real colour.</em></h2>
+      </div>
+      <div class="marquee m-1" aria-hidden="true">
+        <div class="track">
+          <img src="assets/c-burgundy.webp" alt=""><img src="assets/c-blue2.webp" alt=""><img src="assets/c-blonde2.webp" alt=""><img src="assets/after.webp" alt=""><img src="assets/c-black.webp" alt=""><img src="assets/c-blue.webp" alt="">
+          <img src="assets/c-burgundy.webp" alt=""><img src="assets/c-blue2.webp" alt=""><img src="assets/c-blonde2.webp" alt=""><img src="assets/after.webp" alt=""><img src="assets/c-black.webp" alt=""><img src="assets/c-blue.webp" alt="">
+        </div>
+      </div>
+      <div class="insta-core">
+        <p class="kicker" data-reveal>The full portfolio lives on Instagram</p>
+        <a class="pill pill-bleu pill-big" href="https://www.instagram.com/theleybeauty/" target="_blank" rel="noopener" data-reveal>@theleybeauty</a>
+      </div>
+      <div class="marquee m-2" aria-hidden="true">
+        <div class="track">
+          <img src="assets/c-blonde.webp" alt=""><img src="assets/after2.webp" alt=""><img src="assets/c-burgundy2.webp" alt=""><img src="assets/salon-neon.webp" alt=""><img src="assets/c-blue.webp" alt=""><img src="assets/before.webp" alt="">
+          <img src="assets/c-blonde.webp" alt=""><img src="assets/after2.webp" alt=""><img src="assets/c-burgundy2.webp" alt=""><img src="assets/salon-neon.webp" alt=""><img src="assets/c-blue.webp" alt=""><img src="assets/before.webp" alt="">
+        </div>
+      </div>
+    </section>
 
-    <div class="cities">
-      <a class="city" href="reservation.html?city=mtl" data-reveal>
-        <img src="assets/ville-mtl.webp" alt="" aria-hidden="true" loading="lazy">
-        <span class="city-name">Montréal</span>
-        <span class="city-sub">Canada · CAD</span>
-        <span class="city-go">Book Montréal →</span>
-      </a>
-      <a class="city" href="reservation.html?city=hou" data-reveal>
-        <img src="assets/ville-hou.webp" alt="" aria-hidden="true" loading="lazy">
-        <span class="city-name">Houston</span>
-        <span class="city-sub">United States · USD</span>
-        <span class="city-go">Book Houston →</span>
-      </a>
-    </div>
-  </section>
+    <!-- La promesse -->
+    <section class="promesse">
+      <div class="promesse-grid">
+        <div class="prom" data-reveal>
+          <span class="prom-ic" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          </span>
+          <h3>Colour matched to you</h3>
+          <p>Your skin tone, your lifestyle, your maintenance level. Never a shade off a chart.</p>
+        </div>
+        <div class="prom" data-reveal>
+          <span class="prom-ic" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          </span>
+          <h3>Installs that hold</h3>
+          <p>Melted, secured and styled to survive your busiest weeks, in Montréal winters or Houston heat.</p>
+        </div>
+        <div class="prom" data-reveal>
+          <span class="prom-ic" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+          </span>
+          <h3>Zero surprises</h3>
+          <p>Clear prices, your deposit deducted from the total, free reschedule up to 48 h before.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Séquence 6 : Ta place t'attend -->
+    <section class="seq" id="s6" data-frames="film/seq5" data-count="48" data-pin="220">
+      <canvas aria-hidden="true"></canvas>
+      <img class="seq-poster" src="film/seq5/frame-001.webp" alt="Le fauteuil vous attend" loading="lazy">
+      <p class="hud hud-line s6a">Your seat<br><em>is waiting.</em></p>
+      <div class="hud hud-cta"><a class="pill pill-bleu pill-big" href="reservation.html">Book your appointment</a></div>
+    </section>
+
+  </main>
 
   <footer class="foot">
     <a class="wordmark" href="#top"><span class="wm-script">The Ley</span><span class="wm-caps">Beauty</span></a>
     <p class="foot-cities">Montréal · Houston</p>
     <a class="foot-ig" href="https://www.instagram.com/theleybeauty/" target="_blank" rel="noopener">Instagram : @theleybeauty</a>
-    <p class="foot-credit">Concept de site non affilié : démonstration par <a href="https://www.dondisanteme.com" target="_blank" rel="noopener">Dondi Santeme</a>. Certains visuels d'ambiance générés par IA.</p>
+    <p class="foot-credit">Concept de site non affilié : démonstration par <a href="https://www.dondisanteme.com" target="_blank" rel="noopener">Dondi Santeme</a>. Visuels du film générés par IA (personnage fictif).</p>
   </footer>
 
   <script src="vendor/gsap.min.js" defer></script>
